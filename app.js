@@ -6,7 +6,6 @@ const gamesRouter = require("./routes/games");
 const categoriesRouter = require("./routes/categories");
 
 const connectToDatabase = require("./database/connect");
-const cors = require("./middlewares/cors");
 
 const app = express();
 const PORT = 3005;
@@ -14,7 +13,6 @@ const PORT = 3005;
 connectToDatabase();
 
 app.use(
-  cors,
   bodyParser.json(),
   express.static(path.join(__dirname, "public")),
   usersRouter,
@@ -22,4 +20,6 @@ app.use(
   categoriesRouter
 );
 
-app.listen(PORT);
+app.listen(PORT, () => {
+  console.log(123);
+});

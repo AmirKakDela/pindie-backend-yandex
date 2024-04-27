@@ -1,5 +1,7 @@
 const categoriesRouter = require("express").Router();
 
-categoriesRouter.get("/categories", () => {});
+const sendAllCategories = require('../controllers/categories');
+
+categoriesRouter.get("/categories", sendAllCategories);
 
 module.exports = categoriesRouter;
