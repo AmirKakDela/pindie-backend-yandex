@@ -1,5 +1,6 @@
 const sendAllGames = (req, res) => {
-  req.setHeader("Content-Type", "application/json");
+  console.log(req.gamesArray);
+  // req.setHeader("Content-Type", "application/json");
   res.end(JSON.stringify(req.gamesArray));
 };
 
