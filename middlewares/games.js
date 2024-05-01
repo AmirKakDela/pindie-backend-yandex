@@ -22,15 +22,28 @@ const createGame = async (req, res, next) => {
 
 const findGameById = async (req, res, next) => {
   try {
-    req.game = await games.findById(req.params.id).populate({
-      path: "users",
-      select: "-password",
-    });
-    next();
+    // Пробуем найти игру по id
+    req.game = await games
+      .findById(req.params.id) // Поиск записи по id
+      .populate("categories") // Загрузка связанных записей о категориях
+      .populate("users"); // Загрузка связанных записей о пользователях
+    next(); // Передаём управление в следующую функцию
   } catch (error) {
+    // На случай ошибки вернём статус-код 404 с сообщением, что игра не найдена
     res.setHeader("Content-Type", "application/json");
     res.status(404).send(JSON.stringify({ message: "Игра не найдена" }));
   }
 };
 
-module.exports = { findAllGames, createGame, findGameById };
+const updateGame = async (req, res, next) => {
+  try {
+    // В метод передаём id из параметров запроса и объект с новыми свойствами
+    req.game = await games.findByIdAndUpdate(req.params.id, req.body);
+    next();
+  } catch (error) {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "Ошибка обновления игры" }));
+  }
+};
+
+module.exports = { findAllGames, createGame, findGameById, updateGame };
