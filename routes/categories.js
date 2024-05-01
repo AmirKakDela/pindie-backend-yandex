@@ -5,12 +5,14 @@ const {
   sendCategoryCreated,
   sendCategoryById,
   sendCategoryUpdated,
+  sendCategoryDeleted,
 } = require("../controllers/categories");
 const {
   findAllCategories,
   createCategory,
   findCategoryById,
   updateCategory,
+  deleteCategory,
 } = require("../middlewares/categories");
 
 categoriesRouter.get("/categories", findAllCategories, sendAllCategories);
@@ -21,5 +23,6 @@ categoriesRouter.put(
   updateCategory, // Обновляем запись в MongoDB
   sendCategoryUpdated // Возвращаем ответ на клиент
 );
+categoriesRouter.delete("/categories/:id", deleteCategory, sendCategoryDeleted);
 
 module.exports = categoriesRouter;

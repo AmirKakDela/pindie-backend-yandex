@@ -5,12 +5,14 @@ const {
   sendUserCreated,
   sendUserById,
   sendUserUpdated,
+  sendUserDeleted,
 } = require("../controllers/users");
 const {
   findAllUsers,
   createUser,
   findUserById,
   updateUser,
+  deleteUser,
 } = require("../middlewares/users");
 
 usersRouter.get("/users", findAllUsers, sendAllUsers);
@@ -21,5 +23,6 @@ usersRouter.put(
   updateUser, // Обновляем запись в MongoDB
   sendUserUpdated // Возвращаем ответ на клиент
 );
+usersRouter.delete("/users/:id", deleteUser, sendUserDeleted);
 
 module.exports = usersRouter;

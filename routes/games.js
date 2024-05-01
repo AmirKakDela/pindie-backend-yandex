@@ -5,12 +5,14 @@ const {
   sendGameCreated,
   sendGameById,
   sendGameUpdated,
+  sendGameDeleted,
 } = require("../controllers/games");
 const {
   findAllGames,
   createGame,
   findGameById,
   updateGame,
+  deleteGame,
 } = require("../middlewares/games");
 
 gamesRouter.get("/games", findAllGames, sendAllGames);
@@ -22,6 +24,11 @@ gamesRouter.put(
   // Шаг 2. Проверки, если нужны
   updateGame, // Шаг 3. Обновляем запись с игрой
   sendGameUpdated // Шаг 4. Возвращаем на клиент ответ с результатом обновления
+);
+gamesRouter.delete(
+  "/games/:id", // Слушаем запросы по эндпоинту
+  deleteGame,
+  sendGameDeleted // Тут будут функция удаления элементов из MongoDB и ответ клиенту
 );
 
 module.exports = gamesRouter;
