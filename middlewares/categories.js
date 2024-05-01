@@ -5,4 +5,19 @@ const findAllCategories = async (req, res, next) => {
   next();
 };
 
-module.exports = findAllCategories;
+const createCategory = async (req, res, next) => {
+  try {
+    req.category = await categories.create(req.body);
+    next();
+  } catch (error) {
+    res.setHeader("Content-Type", "application/json");
+    res
+      .status(400)
+      .send(JSON.stringify({ message: "Ошибка создания категории" }));
+  }
+};
+
+module.exports = {
+  findAllCategories,
+  createCategory,
+};
